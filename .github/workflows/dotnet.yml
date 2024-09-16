@@ -1,35 +1,27 @@
 name: .NET Core CI
 
-# 触发条件：当有代码推送到 main 分支时触发
 on:
   push:
     branches:
       - main
 
-# 定义工作流程的具体内容
 jobs:
   build:
-    # 使用 GitHub 提供的 Ubuntu 最新版本的运行环境
     runs-on: ubuntu-latest
 
     steps:
-    # 第一步：从 GitHub 仓库签出代码
     - uses: actions/checkout@v2
 
-    # 第二步：安装 .NET SDK
     - name: Set up .NET
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: '6.0.x'
 
-    # 第三步：还原项目的依赖项
     - name: Restore dependencies
       run: dotnet restore
 
-    # 第四步：编译项目
     - name: Build
       run: dotnet build --no-restore
 
-    # 第五步：运行单元测试（如果有）
     - name: Test
       run: dotnet test --no-restore --verbosity normal
